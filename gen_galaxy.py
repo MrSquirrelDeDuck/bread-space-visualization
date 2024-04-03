@@ -1,4 +1,4 @@
-"""This generates a system and makes a map of the system."""
+"""This generates the entire galaxy and makes a map."""
 
 from PIL import Image
 import random

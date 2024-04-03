@@ -12,6 +12,7 @@ galaxy_ypos = 89
 map_size = 256
 
 map_radius = map_size // 2
+half_radius = map_radius // 2
 map_radius_squared = map_radius ** 2
 
 # This is in `1 in __`, so an 8 means a 1/8 chance.
