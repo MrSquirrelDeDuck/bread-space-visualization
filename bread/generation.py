@@ -72,10 +72,10 @@ PLANET_OPTIONS = {
 ### GALAXY GENERATION UTILITIES
 
 def generate_gradients(galaxy_seed: str) -> list:
-    """Generates the gradient and nebulae info for the galaxy.
+    """Generates the gradient info for the galaxy.
 
     Args:
-        galaxy_seed (int): The seed of the galaxy.
+        galaxy_seed (str): The seed of the galaxy.
 
     Returns:
         list: The gradient info in a list.
@@ -152,6 +152,14 @@ def gradient_modifier(
     return 0
 
 def generate_nebulae(galaxy_seed: str) -> list[dict]:
+    """Generates the nebula info for the given galaxy seed.
+
+    Args:
+        galaxy_seed (str): The galaxy seed.
+
+    Returns:
+        list[dict]: The nebula data.
+    """
     out = []
     previous_angle = 1
 
@@ -612,9 +620,6 @@ def generate_system(
     if not(trade_hub_xpos or trade_hub_ypos):
         trade_hub_ypos = rng.randint(0, 1) * -2 + 1
 
-    merchant_xpos = trade_hub_xpos * -1
-    merchant_ypos = trade_hub_ypos * -1
-
     star_type = rng.choices(
         population = list(STAR_WEIGHTS.keys()),
         weights = list(STAR_WEIGHTS.values())
@@ -768,10 +773,6 @@ def generate_system(
             "ypos": trade_hub_ypos,
             "level": int(has_trade_hub)
         },
-        "merchant": {
-            "xpos": merchant_xpos,
-            "ypos": merchant_ypos
-        },
         "wormhole": wormhole_data,
         "radius": math.ceil(largest_distance) + 1,
         "star_type": star_type,
@@ -857,13 +858,16 @@ def get_galaxy_spawn(galaxy_seed: str) -> tuple[int, int]:
         for angle_mod_amount in range(359):
             angle_mod = (angle_mod_amount + 1) // 2 * (1 if angle_mod_amount % 2 == 0 else -1)
 
-            for mod_amount in range(6):
+            for mod_amount in range(5):
                 check_distance = 83 + ((mod_amount + 2) // 2 * (1 if mod_amount % 2 == 0 else -1))
 
                 spawn_x = math.cos(math.radians(angle + angle_mod)) * check_distance
                 spawn_y = math.sin(math.radians(angle + angle_mod)) * check_distance
 
                 spawn_data = galaxy_single(galaxy_seed, round(spawn_x + MAP_RADIUS), round(spawn_y + MAP_RADIUS))
+
+                if spawn_data.get("in_nebula", False):
+                    continue
 
                 if spawn_data.get("system", False):
                     # We found a system!!
