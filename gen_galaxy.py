@@ -89,12 +89,6 @@ def generate_map(width: int, height: int) -> Image.Image:
                 )
         
         im.putpixel((x, y), colors)
-    
-    ### Spawn point.
-    if show_spawn_point:
-        spawn_x, spawn_y = generation.get_galaxy_spawn(galaxy_seed)
-        
-        im.putpixel((round(spawn_x), round(spawn_y)), spawn_point_color)
 
     ### Wormholes.
     if show_wormholes:
@@ -119,6 +113,12 @@ def generate_map(width: int, height: int) -> Image.Image:
                 im.putpixel(data["location"], wormhole_color)
 
                 points.append(data["location"])
+    
+    ### Spawn point.
+    if show_spawn_point:
+        spawn_x, spawn_y = generation.get_galaxy_spawn(galaxy_seed)
+        
+        im.putpixel((round(spawn_x), round(spawn_y)), spawn_point_color)
     
     return im
 
