@@ -1,7 +1,8 @@
 """This is for settings that files may use."""
 
 # The seed of the galaxy.
-galaxy_seed = "7b1b11fed8bae4a69168d53b1ab9ae5e5c68f327ab6073392de83457f3ec0a24"
+# galaxy_seed = "a0cebc902b365f41ce6963cfcf457a21a995c515564c230b409206b61a32b77b"
+galaxy_seed = "2e66d9c79fe5779baa2d820cd9af9767c6f9a38772f4a6f2ceb861d85df26801" # Bread Space development seed.
 
 # For things that use it, this is the position in the galaxy to generate.
 galaxy_xpos = 203

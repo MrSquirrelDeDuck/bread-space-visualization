@@ -18,6 +18,7 @@ show_wormholes = True
 show_spawn_point = True
 show_nebulae = True
 show_0_corruption_band = True
+show_inside_galaxy = True
 
 ### Colors of things: (in RGB form.)
 background_color = (0, 0, 0)
@@ -30,6 +31,7 @@ wormhole_color = (255, 255, 0)
 # These are numbers added to the existing color.
 nebulae_highlight_color = (0, 0, 64)
 corruption_highlight_color = (64, 0, 0)
+inside_galaxy_highlight = (0, 32, 0)
 
 #######################################################################################################
 #######################################################################################################
@@ -41,7 +43,8 @@ options = [
     "show_wormholes",
     "show_spawn_point",
     "show_nebulae",
-    "show_0_corruption_band"
+    "show_0_corruption_band",
+    "show_inside_galaxy"
 ]
 
 for option in options:
@@ -86,6 +89,14 @@ def generate_map(width: int, height: int) -> Image.Image:
                     colors[0] + corruption_highlight_color[0],
                     colors[1] + corruption_highlight_color[1],
                     colors[2] + corruption_highlight_color[2]
+                )
+        
+        if show_inside_galaxy:
+            if ((x - map_radius) ** 2 + (y - map_radius) ** 2) <= generation.MAP_RADIUS_SQUARED:
+                colors = (
+                    colors[0] + inside_galaxy_highlight[0],
+                    colors[1] + inside_galaxy_highlight[1],
+                    colors[2] + inside_galaxy_highlight[2]
                 )
         
         im.putpixel((x, y), colors)
